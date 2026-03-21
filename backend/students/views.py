@@ -1,4 +1,5 @@
 from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend 
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Student
@@ -8,6 +9,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields  = ['status'] 
     search_fields = ['name', 'email', 'student_id']
     ordering_fields = ['name', 'enrolled_date', 'status']
 
