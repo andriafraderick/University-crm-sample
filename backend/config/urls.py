@@ -23,13 +23,11 @@ Including another URLconf
 
 
 from django.contrib import admin
-from django.urls import path
-from django.http import JsonResponse
-
-def health_check(request):
-    return JsonResponse({"status": "Django is running!", "message": "Welcome to University CRM"})
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/health/', health_check),
+    path('api/', include('students.urls')),
+    path('api/', include('courses.urls')),
+    path('api/', include('finance.urls')),
 ]
