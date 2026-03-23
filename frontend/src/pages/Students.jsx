@@ -3,6 +3,7 @@ import { studentsAPI } from '../services/api'
 import StatusBadge from '../components/StatusBadge'
 import Modal from '../components/Modal'
 import FormField, { inputStyle } from '../components/FormField'
+import { useToast } from '../components/Toast' 
 
 // ─── helpers ───────────────────────────────────────────────
 const EMPTY_FORM = {
@@ -55,6 +56,7 @@ export default function Students() {
   const [form, setForm]           = useState(EMPTY_FORM)
   const [saving, setSaving]       = useState(false)
   const [error, setError]         = useState('')
+  const { show, ToastContainer } = useToast()
 
   // ── fetch list ──
   const fetchStudents = useCallback(async () => {
@@ -474,6 +476,7 @@ export default function Students() {
           </form>
         </Modal>
       )}
+      {ToastContainer}
     </div>
   )
 }

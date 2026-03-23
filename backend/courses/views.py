@@ -9,6 +9,7 @@ from .serializers import (
     DepartmentSerializer, FacultySerializer, CourseSerializer,
     EnrollmentSerializer, GradeSerializer, AttendanceSerializer,
 )
+from django_filters.rest_framework import DjangoFilterBackend 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
@@ -33,13 +34,23 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['student__name', 'course__code']
 
-class GradeViewSet(viewsets.ModelViewSet):
-    queryset = Grade.objects.select_related('enrollment')
-    serializer_class = GradeSerializer
-
 class AttendanceViewSet(viewsets.ModelViewSet):
-    queryset = Attendance.objects.select_related('enrollment')
+    queryset = Attendance.objects.select_related(
+        'enrollment', 'enrollment__student', 'enrollment__course'
+    )
     serializer_class = AttendanceSerializer
+    filter_backends  = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['status']
+    search_fields    = ['enrollment__student__name', 'enrollment__course__name']
+
+
+class GradeViewSet(viewsets.ModelViewSet):
+    queryset = Grade.objects.select_related(
+        'enrollment', 'enrollment__student', 'enrollment__course'
+    )
+    serializer_class = GradeSerializer
+    filter_backends  = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields    = ['enrollment__student__name', 'enrollment__course__name']
 
 
 @api_view(['GET'])

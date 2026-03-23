@@ -30,12 +30,33 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         model = Enrollment
         fields = '__all__'
 
-class GradeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Grade
-        fields = '__all__'
-
 class AttendanceSerializer(serializers.ModelSerializer):
+    student_name = serializers.CharField(
+        source='enrollment.student.name', read_only=True
+    )
+    course_name = serializers.CharField(
+        source='enrollment.course.name', read_only=True
+    )
+    course_code = serializers.CharField(
+        source='enrollment.course.code', read_only=True
+    )
+
     class Meta:
         model = Attendance
+        fields = '__all__'
+
+
+class GradeSerializer(serializers.ModelSerializer):
+    student_name = serializers.CharField(
+        source='enrollment.student.name', read_only=True
+    )
+    course_name = serializers.CharField(
+        source='enrollment.course.name', read_only=True
+    )
+    course_code = serializers.CharField(
+        source='enrollment.course.code', read_only=True
+    )
+
+    class Meta:
+        model = Grade
         fields = '__all__'
