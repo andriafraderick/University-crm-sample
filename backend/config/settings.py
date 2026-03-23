@@ -29,7 +29,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7!sco633sl#6t_l-num&p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = [
+    'localhost',
+    'university-crm-backend.onrender.com',
+    'university-crm-sample.vercel.app/login',
+]
 
 
 # Application definition
@@ -132,10 +136,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Allow React dev server to talk to Django
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://university-crm-sample.vercel.app/login"
+]
 
 # Django REST Framework default settings
 REST_FRAMEWORK = {
